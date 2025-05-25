@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Purple Futuristic Button</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <style>
+    .future-btn {
+      /* Base Style */
+      background: #000000; /* Black */
+      color: #b658ff; /* Modern purple */
+      border: 2px solid #b658ff;
+      border-radius: 6px;
+      padding: 14px 28px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      
+      /* Purple Glow */
+      box-shadow: 0 0 12px rgba(182, 88, 255, 0.6),
+                  0 0 24px rgba(182, 88, 255, 0.3);
+    }
+
+    /* Hover Effect */
+    .future-btn:hover {
+      background: rgba(182, 88, 255, 0.05);
+      box-shadow: 0 0 20px rgba(182, 88, 255, 0.8),
+                  0 0 40px rgba(182, 88, 255, 0.4);
+      transform: translateY(-3px);
+    }
+
+    /* Active State */
+    .future-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 0 8px rgba(182, 88, 255, 0.9);
+    }
+
+    /* Pulse Animation (Optional) */
+    .future-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(
+        circle at center,
+        rgba(182, 88, 255, 0.4) 0%,
+        transparent 70%
+      );
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .future-btn:hover::after {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <button class="future-btn" onclick="alert('Access granted!')">
+    Enter Future
+  </button>
+</body>
+</html>
