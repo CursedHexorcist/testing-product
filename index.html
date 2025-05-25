@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neon Dimensional Button</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <title>Dimensional Horror Button</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --neon-purple: #b658ff;
       --electric-blue: #00f0ff;
-      --dark-void: #0a0a12;
+      --void-black: #0a0a12;
+      --blood-red: #ff2a2a;
     }
     
     body {
@@ -17,21 +18,22 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: var(--dark-void);
+      background: var(--void-black);
+      overflow: hidden;
     }
     
-    .dimension-btn {
+    .horror-btn {
       /* Base Style */
       background: rgba(10, 10, 18, 0.8);
       color: white;
       border: none;
       border-radius: 6px;
-      padding: 16px 32px;
+      padding: 18px 36px;
       font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: 16px;
+      font-weight: 700;
+      font-size: 18px;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
@@ -45,7 +47,7 @@
     }
     
     /* Running Light Effect */
-    .dimension-btn::before {
+    .horror-btn::before {
       content: '';
       position: absolute;
       top: 0;
@@ -57,7 +59,7 @@
       z-index: 2;
     }
     
-    .dimension-btn::after {
+    .horror-btn::after {
       content: '';
       position: absolute;
       bottom: 0;
@@ -70,22 +72,23 @@
     }
     
     /* Hover Effects */
-    .dimension-btn:hover {
+    .horror-btn:hover {
       box-shadow: 
-        0 0 15px rgba(182, 88, 255, 0.5),
-        inset 0 0 10px rgba(0, 240, 255, 0.2);
+        0 0 20px rgba(182, 88, 255, 0.6),
+        inset 0 0 15px rgba(0, 240, 255, 0.3);
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
     }
     
-    .dimension-btn:hover::before {
+    .horror-btn:hover::before {
       animation: runTop 2s linear infinite;
     }
     
-    .dimension-btn:hover::after {
+    .horror-btn:hover::after {
       animation: runBottom 2s linear infinite;
     }
     
     /* Dimensional Electricity Effect */
-    .electricity {
+    .electric-field {
       position: absolute;
       top: 0;
       left: 0;
@@ -102,10 +105,34 @@
       z-index: -1;
     }
     
-    .dimension-btn:hover .electricity {
+    .horror-btn:hover .electric-field {
       animation: 
         flicker 0.3s infinite alternate,
         dimensionPulse 4s infinite;
+    }
+    
+    /* Horror Click Effects */
+    .lightning {
+      position: absolute;
+      width: 2px;
+      height: 0;
+      background: white;
+      opacity: 0;
+      transform-origin: top center;
+    }
+    
+    .crack {
+      position: absolute;
+      background: linear-gradient(to right, transparent, var(--blood-red), transparent);
+      height: 1px;
+      opacity: 0;
+    }
+    
+    .void-particle {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      pointer-events: none;
     }
     
     /* Animations */
@@ -145,41 +172,158 @@
       }
     }
     
+    @keyframes lightningStrike {
+      0% {
+        height: 0;
+        opacity: 0.8;
+      }
+      10% {
+        height: 30px;
+        opacity: 1;
+      }
+      20% {
+        height: 10px;
+        opacity: 0.5;
+      }
+      30% {
+        height: 40px;
+        opacity: 1;
+      }
+      70% {
+        height: 0;
+        opacity: 0;
+      }
+      100% {
+        height: 0;
+        opacity: 0;
+      }
+    }
+    
+    @keyframes crackExpand {
+      0% {
+        width: 0;
+        opacity: 1;
+        transform: translateX(0);
+      }
+      50% {
+        width: 100px;
+        opacity: 0.8;
+      }
+      100% {
+        width: 0;
+        opacity: 0;
+        transform: translateX(50px);
+      }
+    }
+    
+    @keyframes particleExplode {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) translate(var(--tx), var(--ty));
+        opacity: 0;
+      }
+    }
+    
     /* Active State */
-    .dimension-btn:active {
+    .horror-btn:active {
       transform: scale(0.98);
       box-shadow: 
         0 0 5px rgba(182, 88, 255, 0.8),
-        inset 0 0 8px rgba(0, 240, 255, 0.3);
+        inset 0 0 20px rgba(255, 42, 42, 0.5);
     }
   </style>
 </head>
 <body>
-  <button class="dimension-btn" id="dimensionButton">
-    <span class="electricity"></span>
-    ENTER PORTAL
+  <button class="horror-btn" id="horrorButton">
+    <span class="electric-field"></span>
+    ENTER THE VOID
   </button>
 
   <script>
-    const button = document.getElementById('dimensionButton');
+    const button = document.getElementById('horrorButton');
+    
+    function createLightning() {
+      for (let i = 0; i < 5; i++) {
+        const lightning = document.createElement('div');
+        lightning.classList.add('lightning');
+        lightning.style.left = `${Math.random() * 100}%`;
+        lightning.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+        lightning.style.animation = `lightningStrike ${Math.random() * 0.3 + 0.2}s linear`;
+        button.appendChild(lightning);
+        
+        setTimeout(() => {
+          lightning.remove();
+        }, 500);
+      }
+    }
+    
+    function createCracks() {
+      for (let i = 0; i < 3; i++) {
+        const crack = document.createElement('div');
+        crack.classList.add('crack');
+        crack.style.top = `${Math.random() * 100}%`;
+        crack.style.left = `${Math.random() * 100}%`;
+        crack.style.animation = `crackExpand ${Math.random() * 0.5 + 0.3}s ease-out forwards`;
+        button.appendChild(crack);
+        
+        setTimeout(() => {
+          crack.remove();
+        }, 800);
+      }
+    }
+    
+    function createParticles() {
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('void-particle');
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        particle.style.width = `${Math.random() * 4 + 1}px`;
+        particle.style.height = particle.style.width;
+        particle.style.setProperty('--tx', `${Math.random() * 100 - 50}px`);
+        particle.style.setProperty('--ty', `${Math.random() * 100 - 50}px`);
+        particle.style.animation = `particleExplode ${Math.random() * 0.5 + 0.3}s ease-out forwards`;
+        particle.style.animationDelay = `${Math.random() * 0.2}s`;
+        button.appendChild(particle);
+        
+        setTimeout(() => {
+          particle.remove();
+        }, 800);
+      }
+    }
     
     button.addEventListener('click', function() {
-      // Add temporary electric burst
-      const burst = document.createElement('div');
-      burst.style.position = 'absolute';
-      burst.style.top = '0';
-      burst.style.left = '0';
-      burst.style.width = '100%';
-      burst.style.height = '100%';
-      burst.style.background = 'radial-gradient(circle, rgba(182,88,255,0.3) 0%, transparent 70%)';
-      burst.style.animation = 'flicker 0.2s, dimensionPulse 0.5s';
-      burst.style.zIndex = '-1';
+      // Visual effects
+      this.style.boxShadow = '0 0 30px rgba(255, 42, 42, 0.8)';
+      this.style.textShadow = '0 0 15px rgba(255, 42, 42, 0.8)';
       
-      this.appendChild(burst);
+      // Create horror elements
+      createLightning();
+      createCracks();
+      createParticles();
       
+      // Text effect
+      const originalText = this.textContent;
+      this.textContent = 'DIMENSION BREACH';
+      
+      // Reset after animation
       setTimeout(() => {
-        burst.remove();
-      }, 500);
+        this.style.boxShadow = '0 0 20px rgba(182, 88, 255, 0.6), inset 0 0 15px rgba(0, 240, 255, 0.3)';
+        this.style.textShadow = '0 0 8px rgba(255, 255, 255, 0.7)';
+        this.textContent = originalText;
+      }, 1500);
+    });
+    
+    // Running light effects
+    button.addEventListener('mouseenter', function() {
+      this.querySelector('.electric-field').style.opacity = '0.1';
+    });
+    
+    button.addEventListener('mouseleave', function() {
+      this.querySelector('.electric-field').style.opacity = '0';
     });
   </script>
 </body>
